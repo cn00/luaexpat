@@ -5,25 +5,37 @@
 # Please note that the package source code is licensed under its own license.
 
 project ( luaexpat C )
-cmake_minimum_required ( VERSION 2.8 )
+cmake_minimum_required ( VERSION 3.1.3 )
 include ( cmake/dist.cmake )
-include ( lua )
+# include ( lua )
 
-# Find Expat
-find_package ( EXPAT REQUIRED )
-include_directories ( ${EXPAT_INCLUDE_DIR} )
+# # Find Expat
+# find_package ( EXPAT REQUIRED )
+
+include_directories (
+    ${EXPAT_INCLUDE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../lua/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libexpat/expat/lib
+)
 
 # Build LuaExpat module
-install_lua_module ( lxp src/lxplib.c src/lxp.def )
-target_link_libraries ( lxp ${EXPAT_LIBRARIES} )
+# install_lua_module ( lxp src/lxplib.c src/lxp.def )
+add_library(lxp SHARED src/lxplib.c src/lxp.def )
+# find_library(LIBLUA liblua ../lua)
+# find_library(EXPAT expat ../libexpat/expat)
+target_link_libraries ( lxp 
+    expat
+    liblua
+)
 
 # Install LuaExpat
 
-install_lua_module ( lxp.lom src/lxp/lom.lua )
-install_data ( README )
-install_doc ( doc/ )
-install_test ( tests/ )
+# install_lua_module ( lxp.lom src/lxp/lom.lua )
+# install_data ( README )
+# install_doc ( doc/ )
+# install_test ( tests/ )
 
-add_lua_test ( tests/test.lua )
-add_lua_test ( tests/test-lom.lua ${CMAKE_CURRENT_SOURCE_DIR}/src # workaround to add modules to package.path (improve?)
-)
+# add_lua_test ( tests/test.lua )
+# add_lua_test ( tests/test-lom.lua 
+#     ${CMAKE_CURRENT_SOURCE_DIR}/src # workaround to add modules to package.path (improve?)
+# )

@@ -14,7 +14,7 @@ include ( cmake/dist.cmake )
 
 include_directories (
     ${EXPAT_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/../lua/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../lua
     ${CMAKE_CURRENT_SOURCE_DIR}/../libexpat/expat/lib
 )
 
